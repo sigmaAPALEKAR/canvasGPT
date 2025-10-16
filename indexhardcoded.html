@@ -6,39 +6,20 @@
     body { font-family: sans-serif; margin: 20px; }
     #chat { width: 100%; height: 700px; border: 1px solid #ccc; padding: 10px; overflow-y: scroll; }
     #input { width: 100%; padding: 10px; margin-top: 10px; }
-    #tokenPrompt { margin-bottom: 20px; }
   </style>
 </head>
 <body>
   <h2>GPT Essay Bot</h2>
 
-  <!-- Ask user for token locally -->
-  <div id="tokenPrompt">
-    <input id="tokenInput" type="text" placeholder="Paste your HF token here" style="width: 80%;">
-    <button id="saveToken">Save Token</button>
-  </div>
-
   <div id="chat"></div>
-  <input id="input" placeholder="Type your prompt here and press Enter" disabled />
-  
+  <input id="input" placeholder="Type your prompt here and press Enter" />
+
   <script>
-    let HF_TOKEN = '';
+    // === HARDCORE MODE: insert your token here ===
+    const HF_TOKEN = "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";
+
     const chat = document.getElementById('chat');
     const input = document.getElementById('input');
-    const tokenInput = document.getElementById('tokenInput');
-    const saveBtn = document.getElementById('saveToken');
-
-    saveBtn.addEventListener('click', () => {
-      HF_TOKEN = tokenInput.value.trim();
-      if (HF_TOKEN) {
-        input.disabled = false;
-        tokenInput.disabled = true;
-        saveBtn.disabled = true;
-        alert('Token saved! You can now type prompts.');
-      } else {
-        alert('Please paste a valid token.');
-      }
-    });
 
     async function sendPrompt(prompt) {
       chat.innerHTML += `<div><b>You:</b> ${prompt}</div>`;
@@ -63,7 +44,7 @@
     }
 
     input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && HF_TOKEN) sendPrompt(input.value);
+      if (e.key === 'Enter') sendPrompt(input.value);
     });
   </script>
 </body>
